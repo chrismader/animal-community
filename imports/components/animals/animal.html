@@ -1,0 +1,237 @@
+<!--<h1>Animals</h1>-->
+<!--<md-button class="md-raised md-primary" ng-click="$ctrl.showConfirm($event)">Show Dialog</md-button>-->
+<!--<md-button class="md-raised md-primary" ng-click="$ctrl.ToggleAdd()">Add</md-button>-->
+
+  <label>Find Animal:</label><input type="text" ng-model="$ctrl.findText">
+  &nbsp;<i class="fa fa-search fa-1x" ng-click="$ctrl.search()" aria-hidden="true"></i>
+  <!--<button ng-click="$ctrl.search()">Find</button><br>-->
+  <!--<md-button class="md-raised md-primary" ng-click="$ctrl.ToggleAdd()">Add</md-button>-->
+<md-content>
+  <md-list>
+    <md-list-item class="md-3-line" ng-repeat="animal in $ctrl.searchResults">
+      
+      <md-button class="md-raised md-primary" ng-click="$ctrl.useAnimal(animal)"><i class="fa fa-check" aria-hidden="true"></i></md-button>
+      <md-button class="md-raised md-primary" ng-click="$ctrl.editAnimal(animal)"><i class="fa fa-pencil" aria-hidden="true"></i></md-button>
+      <md-button class="md-raised md-warn"    ng-click="$ctrl.deleteAnimal(animal)"><i class="fa fa-trash" aria-hidden="true"></i></md-button>
+      <div class="md-list-item-text">
+        <div style="clear:both;">
+          <h3>{{animal.name}}</h3>
+        </h4>
+      <md-divider ng-if="!$last"></md-divider>
+    </md-list-item>
+  </md-list>
+</md-content>
+
+  <md-content ng-hide="true">
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="Animal">
+        <md-content class="md-padding">
+          <div layout-gt-sm="row">
+
+            <md-input-container flex-gt-sm>
+              <label>Type</label>
+              <md-select ng-model="$ctrl.animal.type">
+                <md-option ng-repeat="s in $ctrl.type" value="{{s}}">
+                  {{s}}
+                </md-option>                
+              </md-select>
+            </md-input-container>
+
+            <md-input-container flex-gt-sm>
+              <label>Species</label>
+              <md-select ng-model="$ctrl.animal.species">
+                <md-option ng-repeat="s in $ctrl.species" value="{{s}}">
+                  {{s}}
+                </md-option>                
+              </md-select>
+            </md-input-container>
+
+            <md-input-container flex-gt-sm>
+              <label>Breed(s)</label>
+              <md-select ng-model="$ctrl.animal.breeds">
+                <md-option ng-repeat="s in $ctrl.species" value="{{s}}">
+                  {{s}}
+                </md-option>                
+              </md-select>
+            </md-input-container>
+            <md-input-container>
+              <label>Internal ID</label>
+              <input type="text" ng-model="$ctrl.animal.code" ng-readonly="true">
+            </md-input-container>
+          
+            <md-input-container>
+              <label>Name</label>
+              <input type="text" ng-model="$ctrl.animal.name" required md-minlength="3">
+            </md-input-container>
+
+            <md-input-container>
+              <label>Date of Birth</label>
+              <md-datepicker ng-model="$ctrl.animal.dob.date"></md-datepicker>
+            </md-input-container>
+            
+            <md-input-container>
+              <md-switch ng-model="$ctrl.animal.dob.isEstimate">Estimated</md-switch>
+            </md-input-container>          
+          </div>
+
+          <div layout-gt-sm="row">
+            <md-input-container flex-gt-sm>
+              <label>Sex</label>
+              <md-select ng-model="$ctrl.animal.sex">
+                <md-option value="U">Unknown</md-option>
+                <md-option value="M">Male</md-option>
+                <md-option value="F">Female</md-option>
+              </md-select>
+            </md-input-container>
+
+            <label>Color(s):</label>
+            <md-chips ng-model="$ctrl.animal.colors" name="animalColors" md-enable-chip-edit="true" md-removable="true" md-max-chips="5">
+              <md-chip-template>
+                <strong>{{$chip}}</strong>
+              </md-chip-template>
+            </md-chips>    
+
+            <md-input-container flex-gt-sm>
+              <label>Coat</label>
+              <md-select ng-model="$ctrl.animal.coat">
+                <md-option value="U">Unknown</md-option>
+                <md-option value="A">Allergy Free</md-option>
+                <md-option value="S">Short</md-option>
+                <md-option value="M">Medium</md-option>
+                <md-option value="L">Long</md-option>
+              </md-select>
+            </md-input-container>       
+
+            <md-input-container flex-gt-sm>
+              <label>Size</label>
+              <md-select ng-model="$ctrl.animal.size">
+                <md-option value="U">Unknown</md-option>
+                <md-option value="S">Small</md-option>
+                <md-option value="M">Medium</md-option>
+                <md-option value="L">Large</md-option>
+              </md-select>
+            </md-input-container>                         
+          </div>
+
+  
+             
+
+        <md-input-container class="md-block">
+          <label>Adoption Fee (USD)</label>
+          <input required type="number" step="any" name="rate" ng-model="$ctrl.animal.adoptionFee" />
+        </md-input-container>
+        <!--</md-content>-->
+
+        <md-input-container class="md-block">
+          <label>Public Notes</label>
+          <textarea ng-model="$ctrl.animal.public.notes" rows="5" md-select-on-focus></textarea>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Private Notes</label>
+          <textarea ng-model="$ctrl.animal.private.notes" rows="5" md-select-on-focus></textarea>
+        </md-input-container>   
+
+        <md-input-container class="md-block">
+          <label>Markings</label>
+          <textarea ng-model="$ctrl.animal.public.markings" rows="5" md-select-on-focus></textarea>
+        </md-input-container>                 
+      </md-tab>
+
+      <!-- 2nd Tab -->
+      <md-tab label="Behavior">
+          <md-input-container>
+            <md-switch ng-model="$ctrl.animal.behaviors.isGoodWithCats">Good With Cats</md-switch>
+          </md-input-container>    
+
+          <md-input-container>
+            <md-switch ng-model="$ctrl.animal.behaviors.isGoodWithDogs">Good With Dogs</md-switch>
+          </md-input-container> 
+
+          <md-input-container>
+            <md-switch ng-model="$ctrl.animal.behaviors.isGoodWithKids">Good With Kids</md-switch>
+          </md-input-container>    
+          <md-input-container>
+            <md-switch ng-model="$ctrl.animal.behaviors.isGoodWithMales">Good With Males</md-switch>
+          </md-input-container>    
+          <md-input-container>
+            <md-switch ng-model="$ctrl.animal.behaviors.isGoodWithFemales">Good With Females</md-switch>
+          </md-input-container>    
+          <md-input-container>
+            <md-switch ng-model="$ctrl.animal.behaviors.isHousetrained">Housetrained</md-switch>
+          </md-input-container>          
+      </md-tab>
+
+      <!-- 2nd Tab -->
+      <md-tab label="Entry">
+
+            <md-input-container flex-gt-sm>
+              <label>Brought in by</label>
+              <input type="text" ng-model="$ctrl.animal.broughtInBy" required md-minlength="3">
+            </md-input-container>        
+
+            <md-input-container flex-gt-sm>
+              <label>Reason</label>
+              <md-select ng-model="$ctrl.animal.broughInReason">
+                <md-option value="Moving">Moving</md-option>
+                <md-option value="Money">Unable to afford</md-option>
+                <md-option value="Time">Unable to cope</md-option>
+                <md-option value="Incident">Incident</md-option>
+              </md-select>
+            </md-input-container>  
+
+            <label>Bonded with:</label>
+            <md-chips ng-model="$ctrl.animal.bondedWith" name="bondedWith" md-enable-chip-edit="true" md-removable="true" aria-placeholder="Bonded With">
+              <md-chip-template>
+                <strong>{{$chip}}</strong>
+              </md-chip-template>
+            </md-chips>  
+      </md-tab>
+
+
+      <!-- 3rd Tab -->
+      <md-tab label="Health">
+
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block">
+            <md-switch ng-model="$ctrl.animal.isMicrochipped">Microchipped</md-switch>
+          </md-input-container>
+          
+          <md-input-container class="md-block"  ng-hide="!$ctrl.animal.isMicrochipped">
+            <label>Microchip Number</label>
+            <input type="number" name="rate" ng-model="$ctrl.animal.microchipNumber" />
+          </md-input-container>          
+
+          <md-input-container>
+            <md-switch ng-model="$ctrl.animal.isTatooed">Tatoo</md-switch>
+          </md-input-container>
+
+          <md-input-container class="md-block" ng-hide="!$ctrl.animal.isTatooed">
+            <label>Tatooed</label>
+            <input ng-model="$ctrl.animal.tatoo" />
+          </md-input-container>          
+
+          <md-input-container>
+            <md-switch ng-model="$ctrl.animal.isAltered">Altered</md-switch>
+          </md-input-container>  
+
+          <md-input-container>
+            <md-switch ng-model="$ctrl.animal.isDeclawed">Declawed</md-switch>
+          </md-input-container>
+        </div>
+      </md-tab>
+
+      <md-tab label="Medical">
+        <p>Med</p>
+      </md-tab>
+
+      <md-tab label="Vaccination">
+        <p>Vac</p>
+      </md-tab>
+
+    </md-tabs>
+
+    <md-button class="md-raised md-primary" ng-click="$ctrl.saveAnimal()">Save</md-button>
+    <!--<button ng-click="$ctrl.addAnimal()">Add</button>-->
+    
+  </md-content>

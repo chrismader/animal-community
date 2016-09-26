@@ -1,0 +1,118 @@
+<!--<h1>Contact List</h1>
+<md-button class="md-raised md-primary" ng-click="$ctrl.showConfirm($event)">Show Dialog</md-button>
+<md-button class="md-raised md-primary" ng-click="$ctrl.ToggleAdd()">Add</md-button>-->
+<!-- FIND -->
+
+<div ng-hide="$ctrl.ShowAdd">
+  <label>Find Customer:</label><input type="text" ng-model="$ctrl.findText">
+  &nbsp;<i class="fa fa-search fa-1x" ng-click="$ctrl.search()" aria-hidden="true"></i><br>
+  <!--<md-button class="md-raised md-primary" ng-click="$ctrl.ToggleAdd()">Add</md-button>-->
+<md-content>
+  <md-list>
+    <md-list-item class="md-3-line" ng-repeat="contact in $ctrl.searchResults">
+      <md-button class="md-raised md-primary" ng-click="$ctrl.useContact(contact)">Use</md-button>
+      <md-button class="md-raised md-primary" ng-click="$ctrl.editContact(contact)">Edit</md-button>
+      <md-button class="md-raised md-warn" ng-click="$ctrl.deleteContact(contact)">Delete</md-button>
+      <div class="md-list-item-text">
+        <div style="clear:both;">
+          <h3>{{contact.lastName}}, {{contact.firstName}} {{contact.middleName}}</h3>
+          <h4 ng-hide="contact.address.length === 0">{{contact.address}}</h4>
+          <h4 ng-hide="contact.address2.length === 0">{{contact.address2}}</h4>
+          <h4 ng-hide="contact.city.length === 0 && contact.state.length === 0 && contact.zipCode.length === 0">{{contact.city}} {{contact.state}} {{contact.zipCode}}</h4>
+        </h4>
+          Home: (740) 346-9109
+      <md-divider ng-if="!$last"></md-divider>
+    </md-list-item>
+  </md-list>
+</md-content>
+</div>
+<!-- ADD -->
+<div ng-hide="!$ctrl.ShowAdd">
+<md-content>
+  <input ng-model="$ctrl.scanLicenseText">
+  <button ng-click="$ctrl.scanLicense()">Build</button>
+</md-content>
+<md-content>
+  <div flex-xs flex-gt-xs="300" layout="column">
+  <md-card ng-repeat="tile in $ctrl.contacts" md-theme-watch>
+      <md-card-title>
+        <md-card-title-text>
+          <b>{{tile.lastName}}, {{tile.firstName}}  {{tile.middleName}}</b>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <span>{{tile.address}}</span><br>
+        <span>{{tile.city}} {{tile.state}} {{tile.zipCode}}</span><br>
+        <span ng-repeat="phone in tile.phonenumbers">
+          {{phone.key}}: {{phone.value}} <ion-checkbox ng-value="phone.canCall"><br>
+        </span>
+      </md-card-content>
+  </md-card>
+  </div>
+</md-content>
+
+<form>
+  
+  <md-content layout-gt-sm="row" layout-padding>
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-xs>
+            <label>Company</label>
+            <input ng-model="$ctrl.newcontact.company">
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>First name</label>
+            <input ng-model="$ctrl.newcontact.firstName">
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Middle name</label>
+            <input ng-model="$ctrl.newcontact.middleName">
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Last name</label>
+            <input ng-model="$ctrl.newcontact.lastName">
+          </md-input-container>
+        </div>
+        <md-input-container class="md-block">
+          <label>Address</label>
+          <input ng-model="$ctrl.newcontact.address">
+        </md-input-container>
+        <md-input-container md-no-float class="md-block">
+          <input ng-model="$ctrl.newcontact.address2" placeholder="Address 2">
+        </md-input-container>
+        <div layout-gt-sm="row">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>City</label>
+            <input ng-model="$ctrl.newcontact.city">
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>State</label>
+            <md-select ng-model="$ctrl.newcontact.state">
+              <md-option ng-repeat="state in $ctrl.states" value="{{state.abbreviation}}">
+                {{state.name}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Zip Code</label>
+            
+            <input name="zipCode" ng-model="$ctrl.newcontact.zipCode" placeholder="12345">
+            <!--
+                   required ng-pattern="/^[0-9]{5}$/" md-maxlength="5">
+            <div ng-messages="userForm.postalCode.$error" role="alert" multiple>
+              <div ng-message="required" class="my-message">You must supply a postal code.</div>
+              <div ng-message="pattern" class="my-message">That doesn't look like a valid postal
+                code.
+              </div>
+              <div ng-message="md-maxlength" class="my-message">
+                Don't use the long version silly...we don't need to be that specific...
+              </div>
+            </div>
+            -->
+          </md-input-container>
+        </div>
+  </md-content>
+   <md-button class="md-raised md-primary" ng-click="$ctrl.addContact()">Save</md-button>
+   <md-button class="md-raised md-warn" ng-click="$ctrl.ToggleAdd()">Cancel</md-button>
+   <p style="color:red;">{{$ctrl.saveError}}</p>
+</form>
+</div>

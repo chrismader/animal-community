@@ -1,0 +1,157 @@
+<h1>Point Of Sale</h1>
+<!--<md-button class="md-raised md-primary" ng-click="$ctrl.showConfirm($event)">Show Dialog</md-button>-->
+<!--<md-button class="md-raised md-primary" ng-click="$ctrl.ToggleAdd()">Add</md-button>-->
+
+
+<!-- Add New Product -->
+  <div ng-hide="true">
+    <h3>Products</h3>
+    <p>Number of products: {{$ctrl.numberOfProducts}}</p>
+
+    <!-- Add New Option -->
+    <div layout="column">
+      <div layout="row">
+        <div flex>
+          <i class="fa fa-plus fa-2x" aria-hidden="true" ng-click="$ctrl.addProduct($ctrl.product)"></i>
+        </div>
+        <div  flex="25">
+          <md-input-container>
+            <label>Type</label>
+            <md-select ng-model="$ctrl.product.type">
+              <md-option value="Adoption">Adoption</md-option>
+              <md-option value="Medical">Medical</md-option>
+              <md-option value="Vaccination">Vaccination</md-option>
+              <md-option value="Surrender">Surrender</md-option>
+              <md-option value="Merchandice">Merchandice</md-option>
+              <md-option value="Other">Other</md-option>                
+            </md-select>
+          </md-input-container>
+        </div>
+        <div flex="45">
+          <md-input-container>
+            <label>Name</label>
+            <input type="text" ng-model="$ctrl.product.name" required md-minlength="3">
+          </md-input-container>
+        </div>
+        <div flex>
+          <md-input-container>
+            <label>UPC</label>
+            <input type="text" ng-model="$ctrl.product.upc">
+          </md-input-container>       
+        </div>
+        <div flex>
+          <md-input-container class="md-block">
+            <md-switch ng-model="item.isTaxable" aria-label="Taxable">
+              Taxable: {{ctrl.isTaxable}}
+            </md-switch>
+          </md-input-container>
+        </div>        
+        <div flex layout-align="end center" style="text-align:right !important;">
+          <md-input-container class="md-block">
+            <label>Unit Price(USD)</label>
+            <input required type="number" step="any" name="rate" ng-model="$ctrl.product.unitprice"" />
+          </md-input-container>    
+        </div>
+      </div>
+    </div>
+
+    <div layout="row" ng-repeat="item in $ctrl.getProduct"> 
+
+      <div layout="row"  class="col-md-5"  ng-hide="$ctrl.showDetails" layout-fill>
+        <div flex>
+          <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true" ng-click="$ctrl.toggleEdit(item)" ng-hide="item.editMode"></i>
+          <i class="fa fa-floppy-o fa-2x" aria-hidden="true" ng-hide="!item.editMode" ng-click="$ctrl.update(item)"></i>
+          <i class="fa fa-stop-circle-o fa-2x" aria-hidden="true" ng-hide="!item.editMode" ng-click="$ctrl.toggleEdit(item)"></i>
+          <i class="fa fa-trash fa-2x" aria-hidden="true" ng-hide="!item.editMode"></i>
+          <i class="fa fa-chevron-right 2x" aria-hidden="true"  ng-click="$ctrl.toggleShowDetails()"></i>
+        </div>
+        <div flex="25">
+          <span ng-hide="item.editMode">{{item.type}}</span>
+          <md-input-container  ng-hide="!item.editMode">
+            <md-select ng-model="item.type" aria-label="item type"> 
+              <md-option value="Adoption">Adoption</md-option>
+              <md-option value="Medical">Medical</md-option>
+              <md-option value="Vaccination">Vaccination</md-option>
+              <md-option value="Surrender">Surrender</md-option>
+              <md-option value="Merchandice">Merchandice</md-option>
+              <md-option value="Other">Other</md-option>                
+            </md-select>
+          </md-input-container>          
+        </div>
+        <div flex="50">
+          <span ng-hide="item.editMode">{{item.name}}</span>
+          <md-input-container ng-hide="!item.editMode">
+            <label>Name</label>
+            <input type="text" ng-model="item.name" required md-minlength="3">
+          </md-input-container>          
+        </div>
+        <div flex>
+          <span ng-hide="item.editMode">{{item.upc}}</span>
+          <md-input-container class="md-block" ng-hide="!item.editMode">
+            <label>UPC Code</label>
+            <input ng-model="item.upc"" />
+          </md-input-container>            
+        </div>
+        <div flex>
+          <!--<md-input-container class="md-block" ng-disabled="!item.editMode">-->
+            <md-switch ng-model="item.isTaxable" aria-label="Taxable" ng-disabled="!item.editMode">
+              Taxable
+            </md-switch>
+          <!--</md-input-container>-->
+        </div>        
+        <div flex layout-align="end center" style="text-align:right !important;">
+          <span ng-hide="item.editMode">{{item.unitprice | currency}}</span>
+          <md-input-container class="md-block" ng-hide="!item.editMode">
+            <label>Unit Price(USD)</label>
+            <input required type="number" step="any" ng-model="item.unitprice"" />
+          </md-input-container>                 
+        </div>
+        <!--<md-divider ng-if="!$last"></md-divider>-->
+      </div>
+    </div>
+      <div layout="columns" class="col-md-4" ng-hide="!$ctrl.showDetails" layout-fill>
+        <div flex>
+          <i class="fa fa-chevron-left 2x" aria-hidden="true"  ng-click="$ctrl.toggleShowDetails()"></i>
+        </div>
+        <div flex>Stock</div>
+        <div flex>Qty</div>
+        <div flex>Unit Cost</div>
+        <div flex>Total Cost</div>
+      </div>    
+  </div>
+
+  <!--<contactfind></contactfind>-->
+  <contact on-select-contact-change="$ctrl.con($value)"></contact>
+  <animal on-select-animal-change="$ctrl.conAnimal($value)"></animal>
+  <label ng-hide="!$ctrl.selectedContact">Person: {{$ctrl.selectedContact.firstName}} {{$ctrl.selectedContact.lastName}}</label><br>
+  <label ng-hide="!$ctrl.selectedAnimal">Animal: {{$ctrl.selectedAnimal.code}} {{$ctrl.selectedAnimal.name}}</label>
+  <!--<md-button ng-click="$ctrl.search()"><i class="fa fa-search" aria-hidden="true"></i></md-button>
+  <md-button ng-click="$ctrl.search()"><i class="fa fa-plus" aria-hidden="true"></i></md-button>-->
+  
+  <br>
+  <div>
+    <md-progress-circular ng-disabled="$ctrl.productsLoaded" class="md-hue-2" md-diameter="20px"></md-progress-circular>
+    <md-button class="md-raised md-primary" ng-repeat="type in $ctrl.getProductTypes" ng-click="$ctrl.selectCatagory(type)">{{type.name}}</md-button>
+  </div>
+  
+  <md-button class="md-raised md-warn" ng-repeat="cat in $ctrl.sub" ng-click="$ctrl.addToCart(cat)" ng-disabled="cat.quantityOnHand === 0">{{cat.name}}</md-button>
+  <!--<md-button class="md-raised md-primary" ng-click="$ctrl.ToggleAdd()">Add</md-button>-->
+  <md-content>
+      <md-list-item class="md-3-line" ng-repeat="item in $ctrl.cart track by item.uid">
+        <div class="md-list-item-text">
+            <div style="width:100%">
+              <div style="float:left; font-size:1.25em;"> 
+                <i class="fa fa-trash fa-2x" aria-hidden="true" ng-click="$ctrl.removeFromCart(item, $index)"></i>
+                {{item.name}}  - {{item.animal.name}}
+              </div>
+              <div style="float:right; font-size:1.25em;">
+                {{item.price | currency}}
+              </div>
+            </div>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-list-item>
+    </md-list>
+  </md-content>
+  <label style="font-size:1,25em;">Total Due: <strong>{{$ctrl.subTotal | currency}}</strong></label><br>
+  <label>Item:</label><input ng-keypress="$ctrl.itemKeyPress($event)" ng-model="$ctrl.scanLog">
+  <div></div>

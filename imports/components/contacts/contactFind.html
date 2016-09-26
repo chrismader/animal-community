@@ -1,0 +1,21 @@
+<!-- FIND -->
+  <label>Find Last Name:</label><input type="text" ng-model="$ctrl.findText"><button ng-click="$ctrl.search()">Find</button><br>
+  <p>there</p>
+<md-content>
+  <md-list>
+    <md-list-item class="md-3-line" ng-repeat="contact in $ctrl.searchResults">
+      <md-button class="md-raised md-primary">Use</md-button>
+      <md-button class="md-raised md-primary" ng-click="$ctrl.editContact(contact)">Edit</md-button>
+      <md-button class="md-raised md-warn" ng-click="$ctrl.deleteContact(contact)">Delete</md-button>
+      <div class="md-list-item-text">
+        <div style="clear:both;">
+          <h3>{{contact.lastName}}, {{contact.firstName}} {{contact.middleName}}</h3>
+          <h4 ng-hide="contact.address.length === 0">{{contact.address}}</h4>
+          <h4 ng-hide="contact.address2.length === 0">{{contact.address2}}</h4>
+          <h4 ng-hide="contact.city.length === 0 && contact.state.length === 0 && contact.zipCode.length === 0">{{contact.city}} {{contact.state}} {{contact.zipCode}}</h4>
+        </h4>
+          Home: (740) 346-9109
+      <md-divider ng-if="!$last"></md-divider>
+    </md-list-item>
+  </md-list>
+</md-content>
